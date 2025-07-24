@@ -1,0 +1,83 @@
+{
+  "nav": {
+    "home": "Home",
+    "family": "Family",
+    "news": "News",
+    "events": "Events",
+    "profile": "Profile",
+    "signIn": "Sign In",
+    "joinFamily": "Join Family",
+    "signOut": "Sign Out",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Bal Krishna Nivas",
+    "subtitle": "Family Heritage Portal",
+    "welcomeTitle": "Welcome to",
+    "description": "Connecting families, preserving heritage, and celebrating traditions together across generations",
+    "features": {
+      "familyTree": "Family Tree & Genealogy",
+      "culturalEvents": "Cultural Events & Celebrations",
+      "heritage": "Heritage Documentation"
+    },
+    "joinOurFamily": "Join Our Family",
+    "signIn": "Sign In",
+    "goToDashboard": "Go to Dashboard",
+    "featuresSection": {
+      "title": "Everything You Need to Stay Connected",
+      "description": "Our platform brings families together through shared experiences, memories, and traditions that span generations.",
+      "familyTree": {
+        "title": "Family Tree",
+        "description": "Explore your complete family lineage with interactive family tree visualization"
+      },
+      "familyNews": {
+        "title": "Family News",
+        "description": "Stay updated with the latest family announcements, achievements, and milestones"
+      },
+      "events": {
+        "title": "Events",
+        "description": "Never miss important family gatherings, celebrations, and cultural events"
+      },
+      "heritage": {
+        "title": "Heritage",
+        "description": "Preserve and share your family history, traditions, and cultural heritage"
+      }
+    },
+    "about": {
+      "title": "About Bal Krishna Nivas",
+      "paragraph1": "Bal Krishna Nivas is more than just a family management platform – it's a digital home where generations come together to celebrate their shared heritage and create lasting connections.",
+      "paragraph2": "Our mission is to help families stay connected across distances and generations, preserving precious memories while creating new ones. Whether you're looking to explore your family tree, stay updated with family news, or plan the next big celebration, we're here to help.",
+      "paragraph3": "Join our growing community of families who have chosen to embrace technology while honoring their traditions."
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "description": "Join hundreds of families who are already using our platform to stay connected and preserve their heritage.",
+      "createAccount": "Create Your Account"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm"
+  },
+  "accessibility": {
+    "toolbar": "Accessibility",
+    "increaseFontSize": "Increase Font Size",
+    "decreaseFontSize": "Decrease Font Size",
+    "increaseLineSpacing": "Increase Line Spacing",
+    "decreaseLineSpacing": "Decrease Line Spacing",
+    "highContrast": "High Contrast",
+    "voiceCommands": "Voice Commands",
+    "listening": "Listening...",
+    "resetToDefault": "Reset to Default",
+    "fontSize": "Font Size",
+    "lineSpacing": "Line Spacing",
+    "voiceCommandsHelp": "Voice Commands:",
+    "skipToContent": "Skip to main content"
+  }
+}

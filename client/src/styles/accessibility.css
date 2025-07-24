@@ -1,0 +1,220 @@
+/* Accessibility Styles */
+
+/* CSS Variables for accessibility adjustments */
+:root {
+  --accessibility-font-size: 100%;
+  --accessibility-line-height: 1.5;
+}
+
+/* Only apply accessibility adjustments when explicitly activated */
+.accessibility-active body,
+.accessibility-active h1, 
+.accessibility-active h2, 
+.accessibility-active h3, 
+.accessibility-active h4, 
+.accessibility-active h5, 
+.accessibility-active h6,
+.accessibility-active p, 
+.accessibility-active span, 
+.accessibility-active div, 
+.accessibility-active a, 
+.accessibility-active button,
+.accessibility-active input, 
+.accessibility-active textarea, 
+.accessibility-active select,
+.accessibility-active label, 
+.accessibility-active li, 
+.accessibility-active td, 
+.accessibility-active th {
+  font-size: calc(1em * var(--accessibility-font-size) / 100) !important;
+  line-height: var(--accessibility-line-height) !important;
+}
+
+/* Specific adjustments for different text sizes when accessibility is active */
+.accessibility-active .text-xs {
+  font-size: calc(0.75rem * var(--accessibility-font-size) / 100) !important;
+}
+
+.accessibility-active .text-sm {
+  font-size: calc(0.875rem * var(--accessibility-font-size) / 100) !important;
+}
+
+.accessibility-active .text-base {
+  font-size: calc(1rem * var(--accessibility-font-size) / 100) !important;
+}
+
+.accessibility-active .text-lg {
+  font-size: calc(1.125rem * var(--accessibility-font-size) / 100) !important;
+}
+
+.accessibility-active .text-xl {
+  font-size: calc(1.25rem * var(--accessibility-font-size) / 100) !important;
+}
+
+.accessibility-active .text-2xl {
+  font-size: calc(1.5rem * var(--accessibility-font-size) / 100) !important;
+}
+
+.accessibility-active .text-3xl {
+  font-size: calc(1.875rem * var(--accessibility-font-size) / 100) !important;
+}
+
+.accessibility-active .text-4xl {
+  font-size: calc(2.25rem * var(--accessibility-font-size) / 100) !important;
+}
+
+.accessibility-active .text-5xl {
+  font-size: calc(3rem * var(--accessibility-font-size) / 100) !important;
+}
+
+.accessibility-active .text-6xl {
+  font-size: calc(3.75rem * var(--accessibility-font-size) / 100) !important;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  filter: contrast(1.5) !important;
+}
+
+.high-contrast *,
+.high-contrast *::before,
+.high-contrast *::after {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  border-color: #000000 !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.high-contrast a,
+.high-contrast button,
+.high-contrast .text-orange-600,
+.high-contrast .text-blue-600,
+.high-contrast .text-green-600,
+.high-contrast .text-purple-600 {
+  color: #0000ff !important;
+  text-decoration: underline !important;
+}
+
+.high-contrast a:hover,
+.high-contrast button:hover {
+  color: #ffffff !important;
+  background-color: #0000ff !important;
+}
+
+.high-contrast .bg-orange-600,
+.high-contrast .bg-orange-500,
+.high-contrast .bg-blue-600,
+.high-contrast .bg-green-600,
+.high-contrast .bg-purple-600 {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.high-contrast img,
+.high-contrast svg {
+  filter: contrast(1.2) brightness(1.1) !important;
+}
+
+.high-contrast .shadow-xl,
+.high-contrast .shadow-lg,
+.high-contrast .shadow-md {
+  box-shadow: 2px 2px 4px #000000 !important;
+}
+
+/* Focus styles for better keyboard navigation */
+.high-contrast *:focus {
+  outline: 3px solid #0000ff !important;
+  outline-offset: 2px !important;
+}
+
+/* Accessibility toolbar specific styles */
+.accessibility-toolbar {
+  z-index: 9999 !important;
+}
+
+.accessibility-toolbar button:focus {
+  outline: 2px solid #0066cc !important;
+  outline-offset: 2px !important;
+}
+
+/* Smooth transitions for accessibility changes - only when active */
+.accessibility-active * {
+  transition: font-size 0.3s ease, line-height 0.3s ease !important;
+}
+
+/* Enhanced focus styles for better keyboard navigation */
+*:focus {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+  border-radius: 4px !important;
+}
+
+/* Better focus for interactive elements */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000000;
+  color: #ffffff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 10000;
+  border-radius: 4px;
+}
+
+.skip-to-content:focus {
+  top: 6px;
+}
+
+/* Voice command indicator */
+.voice-listening {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Ensure minimum touch target size for mobile accessibility */
+@media (max-width: 768px) {
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+}
+
+/* Print styles for accessibility */
+@media print {
+  .accessibility-toolbar {
+    display: none !important;
+  }
+  
+  .high-contrast * {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+  }
+}
