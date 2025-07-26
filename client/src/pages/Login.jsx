@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 
 const Login = () => {
   const { login, isAuthenticated, error, clearErrors } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
@@ -48,10 +50,10 @@ const Login = () => {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-            Welcome Back
+            {t('auth.welcomeBack')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Sign in to your Bal Krishna Nivas account
+            {t('auth.signInToAccount')}
           </p>
         </div>
         
@@ -60,7 +62,7 @@ const Login = () => {
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email Address
+                {t('auth.email')}
               </label>
               <div className="mt-1 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

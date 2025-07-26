@@ -8,7 +8,7 @@ import {
   RotateCcw, 
   Mic, 
   MicOff,
-  Eye,
+
   AlignJustify,
   Type,
   ChevronUp,
@@ -25,14 +25,12 @@ const AccessibilityToolbar = () => {
   const {
     fontSize,
     lineHeight,
-    isHighContrast,
     isVoiceEnabled,
     isListening,
     increaseFontSize,
     decreaseFontSize,
     increaseLineHeight,
     decreaseLineHeight,
-    toggleHighContrast,
     toggleVoiceCommands,
     resetToDefault
   } = useAccessibility();
@@ -84,13 +82,7 @@ const AccessibilityToolbar = () => {
       value: `${lineHeight.toFixed(1)}x`,
       disabled: lineHeight <= 1.2
     },
-    {
-      id: 'high-contrast',
-      icon: <Eye size={18} />,
-      label: 'Toggle High Contrast',
-      action: toggleHighContrast,
-      active: isHighContrast
-    },
+
     {
       id: 'voice-commands',
       icon: isVoiceEnabled ? (isListening ? <Mic size={18} /> : <MicOff size={18} />) : <Mic size={18} />,
@@ -223,22 +215,6 @@ const AccessibilityToolbar = () => {
             {/* Toggle Controls */}
             <div className="space-y-2 mb-4">
               <button
-                onClick={toggleHighContrast}
-                className={`w-full flex items-center justify-between p-3 rounded-lg transition-all ${
-                  isHighContrast 
-                    ? 'bg-purple-100 text-purple-700 border border-purple-200' 
-                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
-                }`}
-                aria-label={`${isHighContrast ? 'Disable' : 'Enable'} high contrast mode`}
-              >
-                <div className="flex items-center">
-                  <Eye size={16} className="mr-3" />
-                  <span className="text-sm font-medium">{t('accessibility.highContrast')}</span>
-                </div>
-                <div className={`w-4 h-4 rounded-full ${isHighContrast ? 'bg-purple-600' : 'bg-gray-300'}`} />
-              </button>
-
-              <button
                 onClick={toggleVoiceCommands}
                 className={`w-full flex items-center justify-between p-3 rounded-lg transition-all ${
                   isVoiceEnabled 
@@ -292,7 +268,6 @@ const AccessibilityToolbar = () => {
                   <div>• "Decrease spacing" / "Less spacing" / "Spacing down"</div>
                   
                   <div className="mt-2"><strong>Other Commands:</strong></div>
-                  <div>• "High contrast" / "Toggle contrast"</div>
                   <div>• "Reset" / "Default" / "Clear"</div>
                   <div>• "Go home" / "Home page"</div>
                 </div>
@@ -336,7 +311,6 @@ const AccessibilityToolbar = () => {
                 <li>• <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Alt + -</kbd> Decrease font</li>
                 <li>• <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Alt + ↑</kbd> More spacing</li>
                 <li>• <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Alt + ↓</kbd> Less spacing</li>
-                <li>• <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Alt + C</kbd> High contrast</li>
                 <li>• <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Alt + R</kbd> Reset</li>
               </ul>
             </div>

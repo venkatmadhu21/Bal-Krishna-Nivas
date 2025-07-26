@@ -12,8 +12,10 @@ import {
   XCircle,
   AlertCircle
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Events = () => {
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [selectedStatus, setSelectedStatus] = useState('all');
@@ -24,8 +26,8 @@ const Events = () => {
   const eventsData = [
     {
       id: 1,
-      title: 'Diwali Celebration 2024',
-      description: 'Join us for a grand Diwali celebration with traditional rituals, cultural performances, and a community feast. This year\'s celebration will feature rangoli competition, traditional dance performances, and fireworks display.',
+      title: t('eventContent.event1.title'),
+      description: t('eventContent.event1.description'),
       eventType: 'Festival',
       startDate: '2024-11-12',
       endDate: '2024-11-12',
@@ -460,15 +462,15 @@ const Events = () => {
           <div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center">
               <Calendar className="mr-3" size={32} />
-              Family Events
+              {t('events.pageTitle')}
             </h1>
             <p className="text-gray-600 mt-2">
-              Discover and participate in upcoming family gatherings and celebrations
+              {t('events.pageSubtitle')}
             </p>
           </div>
           <button className="flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
             <Plus size={20} className="mr-2" />
-            Create Event
+            {t('events.createEvent')}
           </button>
         </div>
 
@@ -478,7 +480,7 @@ const Events = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
-              placeholder="Search events..."
+              placeholder={t('events.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"

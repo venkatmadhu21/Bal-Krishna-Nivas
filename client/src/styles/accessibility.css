@@ -71,62 +71,7 @@
   font-size: calc(3.75rem * var(--accessibility-font-size) / 100) !important;
 }
 
-/* High Contrast Mode */
-.high-contrast {
-  filter: contrast(1.5) !important;
-}
-
-.high-contrast *,
-.high-contrast *::before,
-.high-contrast *::after {
-  color: #000000 !important;
-  background-color: #ffffff !important;
-  border-color: #000000 !important;
-  text-shadow: none !important;
-  box-shadow: none !important;
-}
-
-.high-contrast a,
-.high-contrast button,
-.high-contrast .text-orange-600,
-.high-contrast .text-blue-600,
-.high-contrast .text-green-600,
-.high-contrast .text-purple-600 {
-  color: #0000ff !important;
-  text-decoration: underline !important;
-}
-
-.high-contrast a:hover,
-.high-contrast button:hover {
-  color: #ffffff !important;
-  background-color: #0000ff !important;
-}
-
-.high-contrast .bg-orange-600,
-.high-contrast .bg-orange-500,
-.high-contrast .bg-blue-600,
-.high-contrast .bg-green-600,
-.high-contrast .bg-purple-600 {
-  background-color: #000000 !important;
-  color: #ffffff !important;
-}
-
-.high-contrast img,
-.high-contrast svg {
-  filter: contrast(1.2) brightness(1.1) !important;
-}
-
-.high-contrast .shadow-xl,
-.high-contrast .shadow-lg,
-.high-contrast .shadow-md {
-  box-shadow: 2px 2px 4px #000000 !important;
-}
-
-/* Focus styles for better keyboard navigation */
-.high-contrast *:focus {
-  outline: 3px solid #0000ff !important;
-  outline-offset: 2px !important;
-}
+/* High contrast styles removed */
 
 /* Accessibility toolbar specific styles */
 .accessibility-toolbar {

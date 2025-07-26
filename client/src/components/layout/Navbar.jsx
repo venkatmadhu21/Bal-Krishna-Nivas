@@ -60,7 +60,7 @@ const Navbar = () => {
   const publicNavLinks = [
     { path: '/', label: t('nav.home'), icon: Home },
     { path: '/about', label: t('nav.family'), icon: Info },
-    { path: '/history', label: 'History', icon: BookOpen },
+    { path: '/history', label: t('nav.history'), icon: BookOpen },
     { path: '/news', label: t('nav.news'), icon: Newspaper },
     { path: '/events', label: t('nav.events'), icon: Calendar },
   ];
@@ -76,8 +76,8 @@ const Navbar = () => {
       <div className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 rounded-full shadow-2xl backdrop-blur-lg border border-orange-200/40 px-8 py-1">
         <div className="flex justify-between items-center py-2">
           {/* Logo */}
-          <Link 
-            to="/" 
+          <button 
+            onClick={() => navigate('/')}
             className="flex items-center space-x-3 group"
           >
             <div className="w-12 h-12 bg-gradient-to-br from-white to-orange-50 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110 p-1 overflow-hidden">
@@ -93,21 +93,22 @@ const Navbar = () => {
               </h1>
               <p className="text-sm text-orange-100 font-medium">{t('home.subtitle')}</p>
             </div>
-          </Link>
+          </button>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {/* Public Links */}
             {publicNavLinks.map(({ path, label, icon: Icon }) => (
-              <Link
+              <button
                 key={path}
-                to={path}
                 onClick={(e) => {
+                  console.log('🔍 Desktop navbar click:', path, 'Current location:', location.pathname);
                   setIsMenuOpen(false);
-                  // Force navigation for home page
-                  if (path === '/') {
-                    e.preventDefault();
-                    navigate('/', { replace: true });
+                  try {
+                    navigate(path);
+                    console.log('✅ Desktop navigation successful to:', path);
+                  } catch (error) {
+                    console.error('❌ Navigation failed:', error);
                   }
                 }}
                 className={`flex items-center space-x-2 px-3 lg:px-4 py-1.5 rounded-full text-base font-medium transition-all duration-300 ${
@@ -119,14 +120,17 @@ const Navbar = () => {
                 <Icon size={18} />
                 <span className="hidden lg:block">{label}</span>
                 <span className="lg:hidden text-sm">{label.split(' ')[0]}</span>
-              </Link>
+              </button>
             ))}
 
             {/* Private Links (when authenticated) */}
             {isAuthenticated && privateNavLinks.map(({ path, label, icon: Icon }) => (
-              <Link
+              <button
                 key={path}
-                to={path}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  navigate(path);
+                }}
                 className={`flex items-center space-x-2 px-3 lg:px-4 py-1.5 rounded-full text-base font-medium transition-all duration-300 ${
                   isActive(path)
                     ? 'bg-white text-orange-600 shadow-lg transform scale-105'
@@ -136,7 +140,7 @@ const Navbar = () => {
                 <Icon size={18} />
                 <span className="hidden lg:block">{label}</span>
                 <span className="lg:hidden text-sm">{label.split(' ')[0]}</span>
-              </Link>
+              </button>
             ))}
 
             {/* Language Selector */}
@@ -196,13 +200,13 @@ const Navbar = () => {
                       <p className="text-sm font-semibold text-gray-800">{user?.firstName} {user?.lastName}</p>
                       <p className="text-xs text-gray-500">{user?.email}</p>
                     </div>
-                    <Link
-                      to="/profile"
-                      className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition-colors rounded-lg mx-2"
+                    <button
+                      onClick={() => navigate('/profile')}
+                      className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition-colors rounded-lg mx-2 w-full text-left"
                     >
                       <User size={16} />
                       <span>{t('nav.profile')}</span>
-                    </Link>
+                    </button>
                     <button
                       onClick={handleLogout}
                       className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors rounded-lg mx-2"
@@ -214,20 +218,20 @@ const Navbar = () => {
                 </div>
               ) : (
                 <div className="flex items-center space-x-1 lg:space-x-2">
-                  <Link
-                    to="/login"
+                  <button
+                    onClick={() => navigate('/login')}
                     className="px-3 lg:px-4 py-1.5 text-sm font-medium text-white hover:text-orange-100 hover:bg-white/25 rounded-full transition-all duration-300 hover:scale-105"
                   >
                     <span className="hidden lg:block">{t('nav.signIn')}</span>
                     <span className="lg:hidden">{t('nav.signIn')}</span>
-                  </Link>
-                  <Link
-                    to="/register"
+                  </button>
+                  <button
+                    onClick={() => navigate('/register')}
                     className="px-4 lg:px-5 py-1.5 bg-white text-orange-600 text-sm font-medium rounded-full hover:bg-orange-50 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
                     <span className="hidden lg:block">{t('nav.joinFamily')}</span>
                     <span className="lg:hidden">{t('nav.joinFamily')}</span>
-                  </Link>
+                  </button>
                 </div>
               )}
             </div>
@@ -248,18 +252,19 @@ const Navbar = () => {
             <div className="bg-white rounded-2xl shadow-2xl border border-orange-200 p-4 space-y-2">
               {/* Public Links */}
               {publicNavLinks.map(({ path, label, icon: Icon }) => (
-                <Link
+                <button
                   key={path}
-                  to={path}
                   onClick={(e) => {
+                    console.log('🔍 Mobile navbar click:', path, 'Current location:', location.pathname);
                     setIsMenuOpen(false);
-                    // Force navigation for home page
-                    if (path === '/') {
-                      e.preventDefault();
-                      navigate('/', { replace: true });
+                    try {
+                      navigate(path);
+                      console.log('✅ Mobile navigation successful to:', path);
+                    } catch (error) {
+                      console.error('❌ Mobile navigation failed:', error);
                     }
                   }}
-                  className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
+                  className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 w-full text-left ${
                     isActive(path)
                       ? 'bg-orange-600 text-white shadow-lg'
                       : 'text-gray-700 hover:text-orange-600 hover:bg-orange-100'
@@ -267,7 +272,7 @@ const Navbar = () => {
                 >
                   <Icon size={18} />
                   <span>{label}</span>
-                </Link>
+                </button>
               ))}
 
               {/* Private Links (when authenticated) */}
@@ -275,11 +280,13 @@ const Navbar = () => {
                 <>
                   <div className="border-t border-orange-200 pt-2 mt-2">
                     {privateNavLinks.map(({ path, label, icon: Icon }) => (
-                      <Link
+                      <button
                         key={path}
-                        to={path}
-                        onClick={() => setIsMenuOpen(false)}
-                        className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          navigate(path);
+                        }}
+                        className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 w-full text-left ${
                           isActive(path)
                             ? 'bg-orange-600 text-white shadow-lg'
                             : 'text-gray-700 hover:text-orange-600 hover:bg-orange-100'
@@ -287,19 +294,21 @@ const Navbar = () => {
                       >
                         <Icon size={18} />
                         <span>{label}</span>
-                      </Link>
+                      </button>
                     ))}
                   </div>
                   
                   <div className="border-t border-orange-200 pt-2 mt-2">
-                    <Link
-                      to="/profile"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center space-x-3 px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-100 transition-all duration-300"
+                    <button
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        navigate('/profile');
+                      }}
+                      className="flex items-center space-x-3 px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-100 transition-all duration-300 w-full text-left"
                     >
                       <User size={18} />
                       <span>My Profile</span>
-                    </Link>
+                    </button>
                     
                     <button
                       onClick={handleLogout}
@@ -338,20 +347,24 @@ const Navbar = () => {
               {/* Auth Section for Mobile */}
               {!isAuthenticated && (
                 <div className="border-t border-orange-200 pt-4 mt-4 space-y-2">
-                  <Link
-                    to="/login"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="block px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-100 transition-all duration-300"
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      navigate('/login');
+                    }}
+                    className="block px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-100 transition-all duration-300 w-full text-left"
                   >
                     {t('nav.signIn')}
-                  </Link>
-                  <Link
-                    to="/register"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="block px-4 py-3 rounded-xl text-base font-medium bg-gradient-to-r from-orange-600 to-orange-700 text-white hover:from-orange-700 hover:to-orange-800 transition-all duration-300 shadow-lg"
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      navigate('/register');
+                    }}
+                    className="block px-4 py-3 rounded-xl text-base font-medium bg-gradient-to-r from-orange-600 to-orange-700 text-white hover:from-orange-700 hover:to-orange-800 transition-all duration-300 shadow-lg w-full text-left"
                   >
                     {t('nav.joinFamily')}
-                  </Link>
+                  </button>
                 </div>
               )}
             </div>

@@ -10,8 +10,10 @@ import {
   Clock,
   User
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const News = () => {
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedNews, setSelectedNews] = useState(null);
@@ -20,9 +22,9 @@ const News = () => {
   const newsData = [
     {
       id: 1,
-      title: 'Annual Family Reunion 2024 Announced',
-      content: 'We are excited to announce our annual family reunion for 2024. This year\'s event will be bigger and better than ever before, with activities for all age groups. The reunion will take place at the beautiful Gogte Gardens, featuring traditional games, cultural performances, and a grand feast prepared by our family chefs.',
-      summary: 'Join us for our biggest family gathering of the year with exciting activities and cultural performances.',
+      title: t('newsContent.article1.title'),
+      content: t('newsContent.article1.content'),
+      summary: t('newsContent.article1.summary'),
       author: {
         name: 'Rajesh Gogte',
         profilePicture: null
@@ -38,9 +40,9 @@ const News = () => {
     },
     {
       id: 2,
-      title: 'New Baby Born in the Family',
-      content: 'Congratulations to Priya and Amit Gogte on the arrival of their beautiful baby boy! Little Arjun was born on January 10th, weighing 3.2 kg. Both mother and baby are healthy and doing well. The family is overjoyed with this new addition.',
-      summary: 'Congratulations to Priya and Amit on their new arrival - baby Arjun!',
+      title: t('newsContent.article2.title'),
+      content: t('newsContent.article2.content'),
+      summary: t('newsContent.article2.summary'),
       author: {
         name: 'Sunita Gogte',
         profilePicture: null
@@ -74,9 +76,9 @@ const News = () => {
     },
     {
       id: 4,
-      title: 'Traditional Cooking Workshop',
-      content: 'Join our elderly family members for a traditional cooking workshop where they will share age-old recipes and cooking techniques passed down through generations.',
-      summary: 'Learn traditional family recipes from our elderly members.',
+      title: t('newsContent.article3.title'),
+      content: t('newsContent.article3.content'),
+      summary: t('newsContent.article3.summary'),
       author: {
         name: 'Lata Gogte',
         profilePicture: null
@@ -93,14 +95,14 @@ const News = () => {
   ];
 
   const categories = [
-    { value: 'all', label: 'All Categories' },
-    { value: 'General', label: 'General' },
-    { value: 'Announcement', label: 'Announcements' },
-    { value: 'Achievement', label: 'Achievements' },
-    { value: 'Milestone', label: 'Milestones' },
-    { value: 'Memorial', label: 'Memorial' },
-    { value: 'Celebration', label: 'Celebrations' },
-    { value: 'Cultural', label: 'Cultural' }
+    { value: 'all', label: t('news.allCategories') },
+    { value: 'General', label: t('news.general') || 'General' },
+    { value: 'Announcement', label: t('news.announcement') },
+    { value: 'Achievement', label: t('news.achievement') || 'Achievement' },
+    { value: 'Milestone', label: t('news.milestone') },
+    { value: 'Memorial', label: t('news.memorial') || 'Memorial' },
+    { value: 'Celebration', label: t('news.celebration') },
+    { value: 'Cultural', label: t('news.cultural') || 'Cultural' }
   ];
 
   const filteredNews = newsData.filter(news => {
@@ -138,7 +140,7 @@ const News = () => {
             news.priority === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
             'bg-blue-100 text-blue-800'
           }`}>
-            {news.priority} Priority
+            {t(`news.${news.priority.toLowerCase()}`)} {t('news.priority')}
           </span>
         </div>
       </div>
@@ -157,7 +159,7 @@ const News = () => {
             <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
               <User size={12} />
             </div>
-            <span>By {news.author.name}</span>
+            <span>{t('news.by')} {news.author.name}</span>
           </div>
           <div className="flex items-center space-x-1">
             <Clock size={14} />
@@ -166,7 +168,7 @@ const News = () => {
         </div>
         <div className="flex items-center space-x-1">
           <Eye size={14} />
-          <span>{news.views} views</span>
+          <span>{news.views} {t('news.views')}</span>
         </div>
       </div>
 
@@ -265,15 +267,15 @@ const News = () => {
           <div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center">
               <Newspaper className="mr-3" size={32} />
-              Family News
+              {t('news.pageTitle')}
             </h1>
             <p className="text-gray-600 mt-2">
-              Stay updated with the latest family announcements, achievements, and milestones
+              {t('news.pageSubtitle')}
             </p>
           </div>
           <button className="flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
             <Plus size={20} className="mr-2" />
-            Create News
+            {t('news.createNews')}
           </button>
         </div>
 
@@ -283,7 +285,7 @@ const News = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
-              placeholder="Search news..."
+              placeholder={t('news.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"

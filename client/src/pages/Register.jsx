@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { Eye, EyeOff, Mail, Lock, User, Phone, Calendar } from 'lucide-react';
 
 const Register = () => {
   const { register, isAuthenticated, error, clearErrors } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
@@ -27,11 +29,12 @@ const Register = () => {
     if (isAuthenticated) {
       navigate('/dashboard');
     }
-    
-    return () => {
-      clearErrors();
-    };
-  }, [isAuthenticated, navigate, clearErrors]);
+  }, [isAuthenticated, navigate]);
+
+  // Separate useEffect for clearing errors on component mount
+  useEffect(() => {
+    clearErrors();
+  }, []);  // Only run once on mount
 
   const { firstName, lastName, email, password, confirmPassword, phone, dateOfBirth, gender, occupation } = formData;
 
@@ -88,10 +91,10 @@ const Register = () => {
       <div className="max-w-2xl w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-            Join Bal Krishna Nivas
+            {t('auth.joinFamily')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Create your account to connect with your family
+            {t('auth.createAccount')}
           </p>
         </div>
         
@@ -100,7 +103,7 @@ const Register = () => {
             {/* First Name */}
             <div>
               <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                First Name *
+                {t('auth.firstName')} *
               </label>
               <div className="mt-1 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -114,7 +117,7 @@ const Register = () => {
                   value={firstName}
                   onChange={onChange}
                   className="pl-10 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="Enter first name"
+                  placeholder={t('auth.enterFirstName')}
                 />
               </div>
               {validationErrors.firstName && (
@@ -125,7 +128,7 @@ const Register = () => {
             {/* Last Name */}
             <div>
               <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                Last Name *
+                {t('auth.lastName')} *
               </label>
               <div className="mt-1 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -139,7 +142,7 @@ const Register = () => {
                   value={lastName}
                   onChange={onChange}
                   className="pl-10 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="Enter last name"
+                  placeholder={t('auth.enterLastName')}
                 />
               </div>
               {validationErrors.lastName && (
@@ -151,7 +154,7 @@ const Register = () => {
           {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email Address *
+              {t('auth.email')} *
             </label>
             <div className="mt-1 relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -166,7 +169,7 @@ const Register = () => {
                 value={email}
                 onChange={onChange}
                 className="pl-10 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                placeholder="Enter your email"
+                placeholder={t('auth.enterEmail')}
               />
             </div>
             {validationErrors.email && (

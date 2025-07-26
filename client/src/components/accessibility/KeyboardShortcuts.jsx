@@ -47,7 +47,6 @@ const KeyboardShortcuts = () => {
     decreaseFontSize, 
     increaseLineHeight, 
     decreaseLineHeight,
-    toggleHighContrast,
     resetToDefault 
   } = useAccessibility();
   const navigate = useNavigate();
@@ -79,11 +78,7 @@ const KeyboardShortcuts = () => {
             decreaseLineHeight();
             showKeyboardShortcutFeedback('Line spacing decreased');
             break;
-          case 'KeyC': // Alt + C (toggle contrast)
-            event.preventDefault();
-            toggleHighContrast();
-            showKeyboardShortcutFeedback('High contrast toggled');
-            break;
+
           case 'KeyR': // Alt + R (reset)
             event.preventDefault();
             resetToDefault();
@@ -103,7 +98,7 @@ const KeyboardShortcuts = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [increaseFontSize, decreaseFontSize, increaseLineHeight, decreaseLineHeight, toggleHighContrast, resetToDefault, navigate]);
+  }, [increaseFontSize, decreaseFontSize, increaseLineHeight, decreaseLineHeight, resetToDefault, navigate]);
 
   return null; // This component doesn't render anything
 };

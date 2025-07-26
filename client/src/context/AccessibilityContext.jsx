@@ -13,7 +13,6 @@ export const useAccessibility = () => {
 export const AccessibilityProvider = ({ children }) => {
   const [fontSize, setFontSize] = useState(100); // Percentage
   const [lineHeight, setLineHeight] = useState(1.5); // Line height multiplier
-  const [isHighContrast, setIsHighContrast] = useState(false);
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
   const [isListening, setIsListening] = useState(false);
 
@@ -22,7 +21,6 @@ export const AccessibilityProvider = ({ children }) => {
   // Clean up accessibility classes on mount
   useEffect(() => {
     document.body.classList.remove('accessibility-active');
-    document.body.classList.remove('high-contrast');
   }, []);
 
   // Apply styles to document
@@ -39,13 +37,7 @@ export const AccessibilityProvider = ({ children }) => {
     } else {
       document.body.classList.remove('accessibility-active');
     }
-    
-    if (isHighContrast) {
-      document.body.classList.add('high-contrast');
-    } else {
-      document.body.classList.remove('high-contrast');
-    }
-  }, [fontSize, lineHeight, isHighContrast]);
+  }, [fontSize, lineHeight]);
 
   const increaseFontSize = () => {
     const newSize = Math.min(fontSize + 10, 150); // Max 150%
@@ -67,20 +59,14 @@ export const AccessibilityProvider = ({ children }) => {
     setLineHeight(newHeight);
   };
 
-  const toggleHighContrast = () => {
-    setIsHighContrast(!isHighContrast);
-  };
-
   const resetToDefault = () => {
     setFontSize(100);
     setLineHeight(1.5);
-    setIsHighContrast(false);
     setIsVoiceEnabled(false);
     stopVoiceRecognition();
     
     // Ensure accessibility classes are removed
     document.body.classList.remove('accessibility-active');
-    document.body.classList.remove('high-contrast');
   };
 
   const toggleVoiceCommands = () => {
@@ -286,12 +272,7 @@ export const AccessibilityProvider = ({ children }) => {
       commandExecuted = true;
     }
     
-    // High contrast commands
-    else if (normalizedCommand.match(/high.*contrast|contrast|dark.*mode|toggle.*contrast/)) {
-      toggleHighContrast();
-      showVoiceCommandFeedback('High contrast toggled');
-      commandExecuted = true;
-    }
+
     
     // Reset commands
     else if (normalizedCommand.match(/reset|default|clear|original/)) {
@@ -324,25 +305,22 @@ export const AccessibilityProvider = ({ children }) => {
         state: {
           fontSize,
           lineHeight,
-          isHighContrast,
           isVoiceEnabled,
           isListening
         }
       };
     }
-  }, [fontSize, lineHeight, isHighContrast, isVoiceEnabled, isListening]);
+  }, [fontSize, lineHeight, isVoiceEnabled, isListening]);
 
   const value = {
     fontSize,
     lineHeight,
-    isHighContrast,
     isVoiceEnabled,
     isListening,
     increaseFontSize,
     decreaseFontSize,
     increaseLineHeight,
     decreaseLineHeight,
-    toggleHighContrast,
     toggleVoiceCommands,
     resetToDefault,
     handleVoiceCommand // Expose for testing
