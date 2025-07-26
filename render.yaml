@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: bal-krishna-nivas
+    env: node
+    plan: free
+    buildCommand: npm install && cd client && npm install --legacy-peer-deps && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        value: mongodb://localhost:27017/bal-krishna-nivas
+      - key: JWT_SECRET
+        generateValue: true
