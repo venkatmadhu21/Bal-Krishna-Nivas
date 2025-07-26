@@ -3,12 +3,26 @@ services:
     name: bal-krishna-nivas
     env: node
     plan: free
-    buildCommand: npm install && cd client && npm install --legacy-peer-deps && npm run build
+    buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: MONGO_URI
-        value: mongodb://localhost:27017/bal-krishna-nivas
+        fromDatabase:
+          name: bal-krishna-nivas-db
+          property: connectionString
       - key: JWT_SECRET
         generateValue: true
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+
+databases:
+  - name: bal-krishna-nivas-db
+    databaseName: bal-krishna-nivas
+    user: bal-krishna-nivas-user
+    plan: free
