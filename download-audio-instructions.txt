@@ -1,0 +1,23 @@
+INSTRUCTIONS TO ADD DEVI AUDIO:
+
+1. Go to the YouTube video: https://youtu.be/BrGkMcNDGlo?si=JVPSTzHoIIfdH7WT
+
+2. Use one of these methods to download the audio as MP3:
+
+   METHOD 1 - Online Converter (Recommended):
+   - Go to https://ytmp3.cc/ or https://y2mate.com/
+   - Paste the YouTube URL: https://youtu.be/BrGkMcNDGlo
+   - Select MP3 format
+   - Click Download
+   - Save the file as "devi-audio.mp3"
+
+   METHOD 2 - Using yt-dlp (if you have it installed):
+   - Open command prompt/terminal
+   - Run: yt-dlp -x --audio-format mp3 "https://youtu.be/BrGkMcNDGlo" -o "devi-audio.%(ext)s"
+
+3. Place the downloaded "devi-audio.mp3" file in this folder:
+   c:\Users\USER\Desktop\Bal-krishna Nivas\client\public\
+
+4. The audio will now play when you hover over the devi.png image on the home page.
+
+Note: Make sure the file is named exactly "devi-audio.mp3" (case-sensitive).
