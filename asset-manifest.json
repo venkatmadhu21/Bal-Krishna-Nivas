@@ -1,15 +1,22 @@
 {
   "files": {
     "main.css": "/Bal-Krishna-Nivas/static/css/main.c40a93b7.css",
-    "main.js": "/Bal-Krishna-Nivas/static/js/main.5de84d70.js",
+    "main.js": "/Bal-Krishna-Nivas/static/js/main.9b071cc5.js",
     "static/js/453.a3c1d153.chunk.js": "/Bal-Krishna-Nivas/static/js/453.a3c1d153.chunk.js",
+    "static/media/devi-audio.mp3": "/Bal-Krishna-Nivas/static/media/devi-audio.4ad155652607967761b2.mp3",
+    "static/media/devi.png": "/Bal-Krishna-Nivas/static/media/devi.fd569d048c298090987f.png",
+    "static/media/para.jpg": "/Bal-Krishna-Nivas/static/media/para.8ed2a353321473f3b1df.jpg",
+    "static/media/hero.jpg": "/Bal-Krishna-Nivas/static/media/hero.8437797c4a8f32366654.jpg",
+    "static/media/ion-bal.jpg": "/Bal-Krishna-Nivas/static/media/ion-bal.f3545585a129a8e63010.jpg",
+    "static/media/shivv.webp": "/Bal-Krishna-Nivas/static/media/shivv.7a40fc75ea43b0648d60.webp",
+    "static/media/temple.jpg": "/Bal-Krishna-Nivas/static/media/temple.ef9e3a6fcb87ad306a12.jpg",
     "index.html": "/Bal-Krishna-Nivas/index.html",
     "main.c40a93b7.css.map": "/Bal-Krishna-Nivas/static/css/main.c40a93b7.css.map",
-    "main.5de84d70.js.map": "/Bal-Krishna-Nivas/static/js/main.5de84d70.js.map",
+    "main.9b071cc5.js.map": "/Bal-Krishna-Nivas/static/js/main.9b071cc5.js.map",
     "453.a3c1d153.chunk.js.map": "/Bal-Krishna-Nivas/static/js/453.a3c1d153.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c40a93b7.css",
-    "static/js/main.5de84d70.js"
+    "static/js/main.9b071cc5.js"
   ]
 }
