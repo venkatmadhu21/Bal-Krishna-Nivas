@@ -46,10 +46,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center py-8 xs:py-12 px-3 xs:px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-6 xs:space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
+          <h2 className="mt-4 xs:mt-6 text-center text-2xl xs:text-3xl font-bold text-gray-900">
             {t('auth.welcomeBack')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
@@ -57,8 +57,8 @@ const Login = () => {
           </p>
         </div>
         
-        <form className="mt-8 space-y-6" onSubmit={onSubmit}>
-          <div className="space-y-4">
+        <form className="mt-6 xs:mt-8 space-y-4 xs:space-y-6" onSubmit={onSubmit}>
+          <div className="space-y-3 xs:space-y-4">
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -66,7 +66,7 @@ const Login = () => {
               </label>
               <div className="mt-1 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
+                  <Mail className="h-4 w-4 xs:h-5 xs:w-5 text-gray-400" />
                 </div>
                 <input
                   id="email"
@@ -76,7 +76,7 @@ const Login = () => {
                   required
                   value={email}
                   onChange={onChange}
-                  className="pl-10 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                  className="pl-9 xs:pl-10 block w-full px-3 py-2.5 xs:py-2 text-sm xs:text-base border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="Enter your email"
                 />
               </div>
@@ -89,7 +89,7 @@ const Login = () => {
               </label>
               <div className="mt-1 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-4 w-4 xs:h-5 xs:w-5 text-gray-400" />
                 </div>
                 <input
                   id="password"
@@ -99,7 +99,7 @@ const Login = () => {
                   required
                   value={password}
                   onChange={onChange}
-                  className="pl-10 pr-10 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                  className="pl-9 xs:pl-10 pr-9 xs:pr-10 block w-full px-3 py-2.5 xs:py-2 text-sm xs:text-base border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="Enter your password"
                 />
                 <button
@@ -108,9 +108,9 @@ const Login = () => {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <EyeOff className="h-4 w-4 xs:h-5 xs:w-5 text-gray-400 hover:text-gray-600" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <Eye className="h-4 w-4 xs:h-5 xs:w-5 text-gray-400 hover:text-gray-600" />
                   )}
                 </button>
               </div>
@@ -129,15 +129,15 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group relative w-full flex justify-center py-2.5 xs:py-3 px-4 border border-transparent text-sm xs:text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <div className="flex items-center">
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  Signing In...
+                  <span className="text-sm xs:text-base">Signing In...</span>
                 </div>
               ) : (
-                'Sign In'
+                <span className="text-sm xs:text-base">Sign In</span>
               )}
             </button>
           </div>

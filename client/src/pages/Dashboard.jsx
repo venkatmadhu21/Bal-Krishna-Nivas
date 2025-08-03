@@ -104,62 +104,62 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 xs:space-y-8">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg p-8 text-white">
-        <div className="flex items-center justify-between">
+      <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg p-4 xs:p-6 sm:p-8 text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
           <div>
-            <h1 className="text-3xl font-bold mb-2">
+            <h1 className="text-xl xs:text-2xl sm:text-3xl font-bold mb-2">
               Welcome back, {user?.firstName}! 👋
             </h1>
-            <p className="text-primary-100 text-lg">
+            <p className="text-primary-100 text-sm xs:text-base sm:text-lg">
               Here's what's happening in your family community today.
             </p>
           </div>
-          <div className="hidden md:block">
-            <div className="bg-white/10 rounded-full p-4">
-              <User size={48} className="text-white" />
+          <div className="hidden sm:block">
+            <div className="bg-white/10 rounded-full p-3 xs:p-4">
+              <User size={40} className="xs:w-[48px] xs:h-[48px] text-white" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 xs:gap-6">
         {quickStats.map((stat, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+          <div key={index} className="bg-white rounded-lg shadow-md p-4 xs:p-6 border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">{stat.title}</p>
-                <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-                <p className="text-sm text-gray-500 mt-1">{stat.change}</p>
+                <p className="text-xs xs:text-sm font-medium text-gray-600 mb-1">{stat.title}</p>
+                <p className="text-2xl xs:text-3xl font-bold text-gray-900">{stat.value}</p>
+                <p className="text-xs xs:text-sm text-gray-500 mt-1">{stat.change}</p>
               </div>
-              <div className={`${stat.color} rounded-full p-3`}>
-                <stat.icon size={24} className="text-white" />
+              <div className={`${stat.color} rounded-full p-2 xs:p-3`}>
+                <stat.icon size={20} className="xs:w-[24px] xs:h-[24px] text-white" />
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xs:gap-8">
         {/* Recent News */}
         <div className="bg-white rounded-lg shadow-md border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
+          <div className="p-4 xs:p-6 border-b border-gray-200">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                <Newspaper className="mr-2" size={24} />
-                Recent News
+              <h2 className="text-lg xs:text-xl font-semibold text-gray-900 flex items-center">
+                <Newspaper className="mr-2" size={20} />
+                <span className="xs:inline">Recent News</span>
               </h2>
               <Link 
                 to="/news" 
-                className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                className="text-primary-600 hover:text-primary-700 text-xs xs:text-sm font-medium"
               >
                 View All
               </Link>
             </div>
           </div>
-          <div className="p-6">
+          <div className="p-4 xs:p-6">
             <div className="space-y-4">
               {recentNews.map((news) => (
                 <div key={news.id} className="border-b border-gray-100 pb-4 last:border-b-0 last:pb-0">

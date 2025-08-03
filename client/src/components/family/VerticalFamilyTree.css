@@ -1,0 +1,134 @@
+.vertical-tree-container {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.vertical-tree-item {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.vertical-tree-node {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ccc;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s;
+  width: fit-content;
+  min-width: 200px;
+  max-width: 300px;
+  position: relative;
+  cursor: pointer;
+}
+
+.vertical-tree-node.male {
+  background-color: #e6f7ff;
+  border-color: #91d5ff;
+}
+
+.vertical-tree-node.female {
+  background-color: #fff0f6;
+  border-color: #ffadd2;
+}
+
+.vertical-tree-node:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.node-connector {
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  width: 20px;
+  height: 2px;
+  background-color: #ccc;
+}
+
+.vertical-tree-children {
+  position: relative;
+  padding-left: 20px;
+}
+
+.vertical-tree-children:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10px;
+  width: 2px;
+  height: 100%;
+  background-color: #ccc;
+}
+
+.node-content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: flex-start;
+}
+
+.node-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 8px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.node-name {
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  margin-bottom: 4px;
+}
+
+.node-name:hover {
+  text-decoration: underline;
+}
+
+.node-details {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.node-id {
+  font-size: 0.7rem;
+  color: #999;
+}
+
+.node-vansh {
+  font-style: italic;
+}
+
+.node-spouse {
+  font-size: 0.75rem;
+  margin-top: 2px;
+}
+
+.expand-icon {
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  width: 20px;
+  height: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  color: #666;
+}

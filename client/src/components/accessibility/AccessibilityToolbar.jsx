@@ -8,7 +8,7 @@ import {
   RotateCcw, 
   Mic, 
   MicOff,
-
+  Eye,
   AlignJustify,
   Type,
   ChevronUp,
@@ -110,7 +110,7 @@ const AccessibilityToolbar = () => {
       >
         {/* Main Toolbar Panel */}
         {isExpanded && (
-          <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-4 mb-4 w-80 animate-fadeIn">
+          <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-4 mb-4 w-80 animate-fade-in">
             {/* Header */}
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
               <div className="flex items-center space-x-2">
@@ -133,18 +133,23 @@ const AccessibilityToolbar = () => {
                   <Type size={16} className="mr-2" />
                   {t('accessibility.fontSize')}
                 </span>
-                <span className="text-xs text-gray-500">{fontSize}%</span>
+                <span className="text-xs text-gray-500 font-bold">{fontSize}%</span>
+              </div>
+              <div className="text-xs text-gray-500 mb-2 flex justify-between">
+                <span>← Smaller</span>
+                <span>Larger →</span>
               </div>
               <div className="flex items-center space-x-2">
                 <button
                   onClick={decreaseFontSize}
-                  disabled={fontSize <= 80}
+                  disabled={fontSize <= 80} // FIXED: Now correctly checks minimum limit
                   className={`flex items-center justify-center w-8 h-8 rounded-lg transition-all ${
-                    fontSize <= 80 
+                    fontSize <= 80  // FIXED: Now correctly checks minimum limit
                       ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                      : 'bg-blue-100 text-blue-600 hover:bg-blue-200'
+                      : 'bg-red-100 text-red-600 hover:bg-red-200'
                   }`}
                   aria-label="Decrease font size"
+                  title="Make text smaller"
                 >
                   <Minus size={14} />
                 </button>
@@ -156,13 +161,14 @@ const AccessibilityToolbar = () => {
                 </div>
                 <button
                   onClick={increaseFontSize}
-                  disabled={fontSize >= 150}
+                  disabled={fontSize >= 150} // FIXED: Now correctly checks maximum limit
                   className={`flex items-center justify-center w-8 h-8 rounded-lg transition-all ${
-                    fontSize >= 150 
+                    fontSize >= 150  // FIXED: Now correctly checks maximum limit
                       ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                      : 'bg-blue-100 text-blue-600 hover:bg-blue-200'
+                      : 'bg-green-100 text-green-600 hover:bg-green-200'
                   }`}
                   aria-label="Increase font size"
+                  title="Make text larger"
                 >
                   <Plus size={14} />
                 </button>
@@ -331,22 +337,7 @@ const AccessibilityToolbar = () => {
         </button>
       </div>
 
-      {/* CSS for animations */}
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out;
-        }
-      `}</style>
+
     </>
   );
 };

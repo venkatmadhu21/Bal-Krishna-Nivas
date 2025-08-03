@@ -21,6 +21,9 @@
       "heritage": "Heritage Documentation"
     },
     "joinOurFamily": "Join Our Family",
+    "joinUs": "Join Our Family",
+    "learnMore": "Learn More",
+    "welcome": "Welcome to Bal Krishna Nivas",
     "signIn": "Sign In",
     "goToDashboard": "Go to Dashboard",
     "featuresSection": {
@@ -53,7 +56,10 @@
       "title": "Ready to Get Started?",
       "description": "Join hundreds of families who are already using our platform to stay connected and preserve their heritage.",
       "createAccount": "Create Your Account"
-    }
+    },
+    "testButton": "Test Audio",
+    "stopButton": "Stop Audio",
+    "clickToLearnMore": "Click to learn more"
   },
   "common": {
     "loading": "Loading...",
@@ -79,5 +85,12 @@
     "lineSpacing": "Line Spacing",
     "voiceCommandsHelp": "Voice Commands:",
     "skipToContent": "Skip to main content"
+  },
+  "yogeshwariDevi": {
+    "title": "Yogeshwari Devi, Ambajogai",
+    "location": "Marathwada",
+    "backButton": "Back to Home",
+    "content": "Yogeshwari Devi of Ambajogai in Marathwada is the family deity (Kuladevi) of most Chitpavan Kokanastha Brahmins. Therefore, devotees come from all parts of Maharashtra for the darshan of this goddess.\n\nFor the Atrigotri Chitpavan Jogalekar families, this Dantasurmardini, Rajrajeshwari Devi is their special powerful Kulaswamini. The establishment of this Shri Yogeshwari Devi temple is believed to be about one and a half thousand years old.\n\nThe north-facing temple of Shri Yogeshwari Devi, built in Hemadpanti architecture, is located on the western bank of the Jayanti river flowing through the center of Ambajogai city.\n\nThe annual festivals of Shri Yogeshwar Devi are celebrated in the months of Ashwin and Margashirsha. The Shatchandi Havan is completed at the confluence of Ashtami and Navami tithis. In the month of Margashirsha, Ghatasthapana takes place from Shuddha Saptami and the Shatchandi Yajna is completed on the full moon day.\n\nMargashirsha Purnima is the incarnation day of Shri Yogeshwari Devi. On this day, bhog is offered to the goddess.\n\nIt is believed that Jogalekar family members must have darshan of their Kulaswamini at least once in their lifetime. There is a tradition that couples should have darshan of the Kulaswamini after marriage.\n\nThose going to Ambajogai for darshan of Shri Yogeshwari Devi or for religious ceremonies should take help from the Kshetra Upadhyayas of this temple:\n\n1. Kshetra Upadhyaya Bhikaji Kashinath Pathakshastri\n2. Kshetra Upadhyaya Vasant Martand Ausekar-Pathak",
+    "footerNote": "🙏 May Shri Yogeshwari Devi bless all devotees with peace, prosperity, and spiritual growth 🙏"
   }
 }

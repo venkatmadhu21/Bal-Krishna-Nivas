@@ -235,9 +235,9 @@ const Events = () => {
   };
 
   const EventCard = ({ event }) => (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center space-x-2">
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 xs:p-6 hover:shadow-lg transition-shadow">
+      <div className="flex flex-col xs:flex-row xs:items-start xs:justify-between mb-3 xs:mb-4 space-y-2 xs:space-y-0">
+        <div className="flex flex-wrap items-center gap-2">
           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
             event.eventType === 'Festival' ? 'bg-purple-100 text-purple-800' :
             event.eventType === 'Birthday' ? 'bg-pink-100 text-pink-800' :
@@ -309,14 +309,14 @@ const Events = () => {
   );
 
   const EventModal = ({ event, onClose }) => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 xs:p-4 z-50">
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6 border-b border-gray-200">
+        <div className="p-4 xs:p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">{event.title}</h1>
+            <h1 className="text-xl xs:text-2xl font-bold text-gray-900 pr-4">{event.title}</h1>
             <button 
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400 hover:text-gray-600 text-xl xs:text-2xl flex-shrink-0"
             >
               ✕
             </button>
@@ -337,8 +337,8 @@ const Events = () => {
           </div>
         </div>
         
-        <div className="p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="p-4 xs:p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xs:gap-8">
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Event Details</h3>
               <div className="space-y-3 text-sm">
@@ -455,45 +455,46 @@ const Events = () => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 xs:space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-        <div className="flex items-center justify-between mb-6">
+      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 xs:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 xs:mb-6 space-y-4 sm:space-y-0">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-              <Calendar className="mr-3" size={32} />
-              {t('events.pageTitle')}
+            <h1 className="text-2xl xs:text-3xl font-bold text-gray-900 flex items-center">
+              <Calendar className="mr-2 xs:mr-3" size={24} />
+              <span className="xs:inline">Family Events</span>
             </h1>
-            <p className="text-gray-600 mt-2">
-              {t('events.pageSubtitle')}
+            <p className="text-sm xs:text-base text-gray-600 mt-2">
+              Discover and participate in upcoming family gatherings and celebrations
             </p>
           </div>
-          <button className="flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-            <Plus size={20} className="mr-2" />
-            {t('events.createEvent')}
+          <button className="flex items-center px-3 xs:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm xs:text-base">
+            <Plus size={16} className="xs:w-[20px] xs:h-[20px] mr-1 xs:mr-2" />
+            <span className="hidden xs:inline">Create Event</span>
+            <span className="xs:hidden">Create</span>
           </button>
         </div>
 
         {/* Search and Filters */}
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 xs:gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
             <input
               type="text"
-              placeholder={t('events.searchPlaceholder')}
+              placeholder="Search events..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full pl-9 xs:pl-10 pr-3 xs:pr-4 py-2 text-sm xs:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
             />
           </div>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-col xs:flex-row items-stretch xs:items-center space-y-2 xs:space-y-0 xs:space-x-3 sm:space-x-4">
             <div className="flex items-center space-x-2">
-              <Filter size={20} className="text-gray-400" />
+              <Filter size={16} className="xs:w-[20px] xs:h-[20px] text-gray-400" />
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="flex-1 xs:flex-none border border-gray-300 rounded-lg px-2 xs:px-3 py-2 text-sm xs:text-base focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
               >
                 {eventTypes.map(type => (
                   <option key={type.value} value={type.value}>{type.label}</option>
@@ -504,7 +505,7 @@ const Events = () => {
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="border border-gray-300 rounded-lg px-2 xs:px-3 py-2 text-sm xs:text-base focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
             >
               {statusOptions.map(status => (
                 <option key={status.value} value={status.value}>{status.label}</option>
@@ -515,17 +516,17 @@ const Events = () => {
       </div>
 
       {/* Events Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 xs:gap-6">
         {filteredEvents.map(event => (
           <EventCard key={event.id} event={event} />
         ))}
       </div>
 
       {filteredEvents.length === 0 && (
-        <div className="bg-white rounded-lg shadow-md border border-gray-200 p-12 text-center">
-          <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No events found</h3>
-          <p className="text-gray-600">Try adjusting your search criteria or filters.</p>
+        <div className="bg-white rounded-lg shadow-md border border-gray-200 p-8 xs:p-12 text-center">
+          <Calendar size={40} className="xs:w-[48px] xs:h-[48px] mx-auto text-gray-400 mb-3 xs:mb-4" />
+          <h3 className="text-base xs:text-lg font-semibold text-gray-900 mb-2">No events found</h3>
+          <p className="text-sm xs:text-base text-gray-600">Try adjusting your search criteria or filters.</p>
         </div>
       )}
 

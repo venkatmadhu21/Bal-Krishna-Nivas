@@ -17,6 +17,11 @@ app.use('/api/family', require('./routes/family'));
 app.use('/api/news', require('./routes/news'));
 app.use('/api/events', require('./routes/events'));
 
+// Development routes
+if (process.env.NODE_ENV !== 'production') {
+  app.use('/api/seed', require('./routes/seed'));
+}
+
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
@@ -29,13 +34,26 @@ if (process.env.NODE_ENV === 'production') {
 // MongoDB Connection
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/bal-krishna-nivas', {
+    const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/bal-krishna-nivas';
+    console.log(`Attempting to connect to MongoDB at: ${mongoURI}`);
+    
+    await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+    
     console.log('MongoDB Connected Successfully');
+    
+    // Log the database name to confirm we're connected to the right database
+    const dbName = mongoose.connection.db.databaseName;
+    console.log(`Connected to database: ${dbName}`);
+    
+    // Log the collections to confirm the familymembers collection exists
+    const collections = await mongoose.connection.db.listCollections().toArray();
+    console.log('Available collections:', collections.map(c => c.name));
   } catch (error) {
     console.error('Database connection error:', error.message);
+    console.error('Full error:', error);
     process.exit(1);
   }
 };

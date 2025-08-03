@@ -16,7 +16,15 @@ const resources = {
         joinFamily: 'Join Family',
         profile: 'My Profile',
         signOut: 'Sign Out',
-        language: 'Language'
+        language: 'Language',
+        familyTree: 'Family Tree',
+        viewTree: 'View Tree',
+        apiTest: 'API Test',
+        seedData: 'Seed Data',
+        rawData: 'Raw Data',
+        dashboard: 'Dashboard',
+        familyMembers: 'Family Members',
+        selectLanguage: 'Select Language'
       },
       // Home page
       home: {
@@ -234,7 +242,15 @@ const resources = {
         joinFamily: 'कुटुंबात सामील व्हा',
         profile: 'माझी प्रोफाइल',
         signOut: 'साइन आउट',
-        language: 'भाषा'
+        language: 'भाषा',
+        familyTree: 'कौटुंबिक वृक्ष',
+        viewTree: 'वृक्ष पहा',
+        apiTest: 'API टेस्ट',
+        seedData: 'सीड डेटा',
+        rawData: 'रॉ डेटा',
+        dashboard: 'डॅशबोर्ड',
+        familyMembers: 'कुटुंबातील सदस्य',
+        selectLanguage: 'भाषा निवडा'
       },
       // Home page - मराठी
       home: {

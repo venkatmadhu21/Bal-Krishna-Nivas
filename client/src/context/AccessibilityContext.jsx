@@ -26,7 +26,7 @@ export const AccessibilityProvider = ({ children }) => {
   // Apply styles to document
   useEffect(() => {
     const root = document.documentElement;
-    root.style.setProperty('--accessibility-font-size', `${fontSize}%`);
+    root.style.setProperty('--accessibility-font-size', fontSize);
     root.style.setProperty('--accessibility-line-height', lineHeight);
     
     // Only add accessibility-active class when settings are changed from defaults

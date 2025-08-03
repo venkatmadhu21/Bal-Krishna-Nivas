@@ -125,8 +125,8 @@ const News = () => {
   };
 
   const NewsCard = ({ news }) => (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-      <div className="flex items-start justify-between mb-4">
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 xs:p-6 hover:shadow-lg transition-shadow">
+      <div className="flex flex-col xs:flex-row xs:items-start xs:justify-between mb-3 xs:mb-4 space-y-2 xs:space-y-0">
         <div className="flex items-center space-x-2">
           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
             news.priority === 'High' ? 'bg-red-100 text-red-800' :
@@ -260,44 +260,45 @@ const News = () => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 xs:space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-        <div className="flex items-center justify-between mb-6">
+      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 xs:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 xs:mb-6 space-y-4 sm:space-y-0">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-              <Newspaper className="mr-3" size={32} />
-              {t('news.pageTitle')}
+            <h1 className="text-2xl xs:text-3xl font-bold text-gray-900 flex items-center">
+              <Newspaper className="mr-2 xs:mr-3" size={24} />
+              <span className="xs:inline">{t('news.pageTitle')}</span>
             </h1>
-            <p className="text-gray-600 mt-2">
+            <p className="text-sm xs:text-base text-gray-600 mt-2">
               {t('news.pageSubtitle')}
             </p>
           </div>
-          <button className="flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-            <Plus size={20} className="mr-2" />
-            {t('news.createNews')}
+          <button className="flex items-center px-3 xs:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm xs:text-base">
+            <Plus size={16} className="xs:w-[20px] xs:h-[20px] mr-1 xs:mr-2" />
+            <span className="hidden xs:inline">{t('news.createNews')}</span>
+            <span className="xs:hidden">Create</span>
           </button>
         </div>
 
         {/* Search and Filters */}
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 xs:gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
             <input
               type="text"
               placeholder={t('news.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full pl-9 xs:pl-10 pr-3 xs:pr-4 py-2 text-sm xs:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
             />
           </div>
           
           <div className="flex items-center space-x-2">
-            <Filter size={20} className="text-gray-400" />
+            <Filter size={16} className="xs:w-[20px] xs:h-[20px] text-gray-400" />
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="border border-gray-300 rounded-lg px-2 xs:px-3 py-2 text-sm xs:text-base focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
             >
               {categories.map(category => (
                 <option key={category.value} value={category.value}>{category.label}</option>
@@ -308,17 +309,17 @@ const News = () => {
       </div>
 
       {/* News Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 xs:gap-6">
         {filteredNews.map(news => (
           <NewsCard key={news.id} news={news} />
         ))}
       </div>
 
       {filteredNews.length === 0 && (
-        <div className="bg-white rounded-lg shadow-md border border-gray-200 p-12 text-center">
-          <Newspaper size={48} className="mx-auto text-gray-400 mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No news found</h3>
-          <p className="text-gray-600">Try adjusting your search criteria or filters.</p>
+        <div className="bg-white rounded-lg shadow-md border border-gray-200 p-8 xs:p-12 text-center">
+          <Newspaper size={40} className="xs:w-[48px] xs:h-[48px] mx-auto text-gray-400 mb-3 xs:mb-4" />
+          <h3 className="text-base xs:text-lg font-semibold text-gray-900 mb-2">No news found</h3>
+          <p className="text-sm xs:text-base text-gray-600">Try adjusting your search criteria or filters.</p>
         </div>
       )}
 

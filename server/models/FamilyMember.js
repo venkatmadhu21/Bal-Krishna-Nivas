@@ -1,26 +1,53 @@
 const mongoose = require('mongoose');
 
 const FamilyMemberSchema = new mongoose.Schema({
-  firstName: {
+  name: {
     type: String,
     required: true,
     trim: true
   },
-  lastName: {
+  vansh: {
     type: String,
-    required: true,
     trim: true
-  },
-  dateOfBirth: {
-    type: Date
-  },
-  dateOfDeath: {
-    type: Date
   },
   gender: {
     type: String,
     enum: ['Male', 'Female'],
     required: true
+  },
+  serNo: {
+    type: Number,
+    required: true,
+    unique: true
+  },
+  sonDaughterCount: {
+    type: Number,
+    default: 0
+  },
+  spouse: {
+    name: String,
+    serNo: Number
+  },
+  fatherSerNo: {
+    type: Number
+  },
+  motherSerNo: {
+    type: Number
+  },
+  childrenSerNos: {
+    type: [Number],
+    default: []
+  },
+  level: {
+    type: Number,
+    required: true
+  },
+  // Additional fields that might be useful
+  dateOfBirth: {
+    type: Date
+  },
+  dateOfDeath: {
+    type: Date
   },
   profilePicture: {
     type: String,
@@ -29,44 +56,6 @@ const FamilyMemberSchema = new mongoose.Schema({
   occupation: {
     type: String,
     trim: true
-  },
-  maritalStatus: {
-    type: String,
-    enum: ['Single', 'Married', 'Divorced', 'Widowed'],
-    default: 'Single'
-  },
-  spouse: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'FamilyMember'
-  },
-  father: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'FamilyMember'
-  },
-  mother: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'FamilyMember'
-  },
-  children: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'FamilyMember'
-  }],
-  siblings: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'FamilyMember'
-  }],
-  generation: {
-    type: Number,
-    required: true,
-    default: 1
-  },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  isAlive: {
-    type: Boolean,
-    default: true
   },
   biography: {
     type: String,
@@ -89,7 +78,8 @@ const FamilyMemberSchema = new mongoose.Schema({
 });
 
 // Index for better query performance
-FamilyMemberSchema.index({ generation: 1 });
-FamilyMemberSchema.index({ father: 1, mother: 1 });
+FamilyMemberSchema.index({ serNo: 1 });
+FamilyMemberSchema.index({ level: 1 });
+FamilyMemberSchema.index({ fatherSerNo: 1, motherSerNo: 1 });
 
 module.exports = mongoose.model('FamilyMember', FamilyMemberSchema);

@@ -7,15 +7,11 @@ const router = express.Router();
 
 // @route   GET api/family
 // @desc    Get all family members
-// @access  Private
-router.get('/', auth, async (req, res) => {
+// @access  Public (temporarily for testing)
+router.get('/', async (req, res) => {
   try {
     const familyMembers = await FamilyMember.find()
-      .populate('father', 'firstName lastName')
-      .populate('mother', 'firstName lastName')
-      .populate('spouse', 'firstName lastName')
-      .populate('children', 'firstName lastName')
-      .sort({ generation: 1, createdAt: 1 });
+      .sort({ level: 1, serNo: 1 });
     
     res.json(familyMembers);
   } catch (error) {
@@ -24,17 +20,13 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route   GET api/family/:id
-// @desc    Get family member by ID
-// @access  Private
-router.get('/:id', auth, async (req, res) => {
+// @route   GET api/family/member/:serNo
+// @desc    Get family member by serial number
+// @access  Public (temporarily for testing)
+router.get('/member/:serNo', async (req, res) => {
   try {
-    const familyMember = await FamilyMember.findById(req.params.id)
-      .populate('father', 'firstName lastName profilePicture dateOfBirth')
-      .populate('mother', 'firstName lastName profilePicture dateOfBirth')
-      .populate('spouse', 'firstName lastName profilePicture dateOfBirth')
-      .populate('children', 'firstName lastName profilePicture dateOfBirth')
-      .populate('siblings', 'firstName lastName profilePicture dateOfBirth');
+    const serNo = parseInt(req.params.serNo);
+    const familyMember = await FamilyMember.findOne({ serNo });
 
     if (!familyMember) {
       return res.status(404).json({ message: 'Family member not found' });
@@ -43,22 +35,172 @@ router.get('/:id', auth, async (req, res) => {
     res.json(familyMember);
   } catch (error) {
     console.error(error.message);
-    if (error.kind === 'ObjectId') {
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   GET api/family/member/:serNo/children
+// @desc    Get all children of a family member
+// @access  Public (temporarily for testing)
+router.get('/member/:serNo/children', async (req, res) => {
+  try {
+    const serNo = parseInt(req.params.serNo);
+    const familyMember = await FamilyMember.findOne({ serNo });
+
+    if (!familyMember) {
       return res.status(404).json({ message: 'Family member not found' });
     }
+
+    const children = await FamilyMember.find({ 
+      serNo: { $in: familyMember.childrenSerNos } 
+    });
+
+    res.json(children);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   GET api/family/member/:serNo/parents
+// @desc    Get parents of a family member
+// @access  Public (temporarily for testing)
+router.get('/member/:serNo/parents', async (req, res) => {
+  try {
+    const serNo = parseInt(req.params.serNo);
+    const familyMember = await FamilyMember.findOne({ serNo });
+
+    if (!familyMember) {
+      return res.status(404).json({ message: 'Family member not found' });
+    }
+
+    const father = await FamilyMember.findOne({ serNo: familyMember.fatherSerNo });
+    const mother = await FamilyMember.findOne({ serNo: familyMember.motherSerNo });
+
+    const parents = {
+      father: father || null,
+      mother: mother || null
+    };
+
+    res.json(parents);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   GET api/family/tree/:serNo
+// @desc    Get full descendant tree of a family member
+// @access  Public (temporarily for testing)
+router.get('/tree/:serNo', async (req, res) => {
+  try {
+    const serNo = parseInt(req.params.serNo);
+    console.log(`Fetching family tree for serNo: ${serNo}`);
+    
+    const rootMember = await FamilyMember.findOne({ serNo });
+
+    if (!rootMember) {
+      console.log(`Family member with serNo ${serNo} not found`);
+      return res.status(404).json({ message: 'Family member not found' });
+    }
+    
+    console.log(`Found root member: ${rootMember.name} (${rootMember.serNo})`);
+    console.log(`Children SerNos: ${rootMember.childrenSerNos.join(', ')}`);
+
+    // Recursive function to build the family tree
+    async function buildFamilyTree(member) {
+      if (!member.childrenSerNos || member.childrenSerNos.length === 0) {
+        console.log(`Member ${member.name} (${member.serNo}) has no children`);
+        return [];
+      }
+      
+      console.log(`Finding children for ${member.name} (${member.serNo}): ${member.childrenSerNos.join(', ')}`);
+      
+      const children = await FamilyMember.find({ 
+        serNo: { $in: member.childrenSerNos } 
+      }).sort({ serNo: 1 });
+      
+      console.log(`Found ${children.length} children for ${member.name} (${member.serNo})`);
+
+      const childrenWithDescendants = [];
+      for (const child of children) {
+        console.log(`Processing child: ${child.name} (${child.serNo})`);
+        const childWithDescendants = child.toObject();
+        childWithDescendants.children = await buildFamilyTree(child);
+        childrenWithDescendants.push(childWithDescendants);
+      }
+
+      return childrenWithDescendants;
+    }
+
+    const rootWithDescendants = rootMember.toObject();
+    rootWithDescendants.children = await buildFamilyTree(rootMember);
+    
+    console.log(`Returning family tree with root: ${rootWithDescendants.name} (${rootWithDescendants.serNo})`);
+    console.log(`Root has ${rootWithDescendants.children.length} immediate children`);
+
+    res.json(rootWithDescendants);
+  } catch (error) {
+    console.error('Error building family tree:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   GET api/family/members
+// @desc    Get family members by level
+// @access  Public (temporarily for testing)
+router.get('/members', async (req, res) => {
+  try {
+    const { level } = req.query;
+    
+    let query = {};
+    if (level) {
+      query.level = parseInt(level);
+    }
+    
+    const familyMembers = await FamilyMember.find(query)
+      .sort({ serNo: 1 });
+    
+    res.json(familyMembers);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   GET api/family/raw-data
+// @desc    Get all family members with their raw data structure
+// @access  Public (temporarily for testing)
+router.get('/raw-data', async (req, res) => {
+  try {
+    console.log('Fetching raw family data from database');
+    
+    const familyMembers = await FamilyMember.find()
+      .sort({ serNo: 1 });
+    
+    console.log(`Found ${familyMembers.length} family members`);
+    
+    // Log a sample of the data
+    if (familyMembers.length > 0) {
+      const sample = familyMembers[0].toObject();
+      console.log('Sample data structure:', JSON.stringify(sample, null, 2));
+    }
+    
+    res.json(familyMembers);
+  } catch (error) {
+    console.error('Error fetching raw data:', error);
     res.status(500).send('Server error');
   }
 });
 
 // @route   POST api/family
 // @desc    Add family member
-// @access  Private (Admin only)
+// @access  Public (temporarily for testing)
 router.post('/', [
-  auth,
-  body('firstName', 'First name is required').notEmpty(),
-  body('lastName', 'Last name is required').notEmpty(),
+  body('name', 'Name is required').notEmpty(),
   body('gender', 'Gender is required').isIn(['Male', 'Female']),
-  body('generation', 'Generation is required').isNumeric()
+  body('serNo', 'Serial number is required').isNumeric(),
+  body('level', 'Level is required').isNumeric()
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -67,114 +209,85 @@ router.post('/', [
 
   try {
     const {
-      firstName,
-      lastName,
+      name,
+      vansh,
+      gender,
+      serNo,
+      sonDaughterCount,
+      spouse,
+      fatherSerNo,
+      motherSerNo,
+      childrenSerNos,
+      level,
       dateOfBirth,
       dateOfDeath,
-      gender,
       profilePicture,
       occupation,
-      maritalStatus,
-      father,
-      mother,
-      spouse,
-      generation,
       biography,
       achievements,
       address
     } = req.body;
 
+    // Check if serNo already exists
+    const existingMember = await FamilyMember.findOne({ serNo });
+    if (existingMember) {
+      return res.status(400).json({ message: 'Serial number already exists' });
+    }
+
     const familyMember = new FamilyMember({
-      firstName,
-      lastName,
+      name,
+      vansh,
+      gender,
+      serNo,
+      sonDaughterCount: sonDaughterCount || 0,
+      spouse,
+      fatherSerNo,
+      motherSerNo,
+      childrenSerNos: childrenSerNos || [],
+      level,
       dateOfBirth,
       dateOfDeath,
-      gender,
       profilePicture,
       occupation,
-      maritalStatus,
-      father,
-      mother,
-      spouse,
-      generation,
       biography,
       achievements,
-      address,
-      isAlive: !dateOfDeath
+      address
     });
 
     await familyMember.save();
 
-    // Update parent's children array
-    if (father) {
-      await FamilyMember.findByIdAndUpdate(father, {
-        $addToSet: { children: familyMember._id }
-      });
+    // Update parent's children array if parents exist
+    if (fatherSerNo) {
+      await FamilyMember.findOneAndUpdate(
+        { serNo: fatherSerNo },
+        { $addToSet: { childrenSerNos: serNo } }
+      );
     }
-    if (mother) {
-      await FamilyMember.findByIdAndUpdate(mother, {
-        $addToSet: { children: familyMember._id }
-      });
-    }
-
-    // Update spouse relationship
-    if (spouse) {
-      await FamilyMember.findByIdAndUpdate(spouse, {
-        spouse: familyMember._id
-      });
-    }
-
-    // Update siblings
-    if (father || mother) {
-      const siblings = await FamilyMember.find({
-        $and: [
-          { _id: { $ne: familyMember._id } },
-          {
-            $or: [
-              { father: father },
-              { mother: mother }
-            ]
-          }
-        ]
-      });
-
-      const siblingIds = siblings.map(s => s._id);
-      
-      // Add siblings to new member
-      familyMember.siblings = siblingIds;
-      await familyMember.save();
-
-      // Add new member to siblings
-      await FamilyMember.updateMany(
-        { _id: { $in: siblingIds } },
-        { $addToSet: { siblings: familyMember._id } }
+    if (motherSerNo) {
+      await FamilyMember.findOneAndUpdate(
+        { serNo: motherSerNo },
+        { $addToSet: { childrenSerNos: serNo } }
       );
     }
 
-    const populatedMember = await FamilyMember.findById(familyMember._id)
-      .populate('father', 'firstName lastName')
-      .populate('mother', 'firstName lastName')
-      .populate('spouse', 'firstName lastName');
-
-    res.json(populatedMember);
+    res.json(familyMember);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');
   }
 });
 
-// @route   PUT api/family/:id
+// @route   PUT api/family/member/:serNo
 // @desc    Update family member
-// @access  Private (Admin only)
-router.put('/:id', auth, async (req, res) => {
+// @access  Public (temporarily for testing)
+router.put('/member/:serNo', async (req, res) => {
   try {
-    const familyMember = await FamilyMember.findByIdAndUpdate(
-      req.params.id,
+    const serNo = parseInt(req.params.serNo);
+    const familyMember = await FamilyMember.findOneAndUpdate(
+      { serNo },
       { $set: req.body },
       { new: true }
-    ).populate('father', 'firstName lastName')
-     .populate('mother', 'firstName lastName')
-     .populate('spouse', 'firstName lastName');
+    );
 
     if (!familyMember) {
       return res.status(404).json({ message: 'Family member not found' });
@@ -187,64 +300,35 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
-// @route   DELETE api/family/:id
+// @route   DELETE api/family/member/:serNo
 // @desc    Delete family member
-// @access  Private (Admin only)
-router.delete('/:id', auth, async (req, res) => {
+// @access  Public (temporarily for testing)
+router.delete('/member/:serNo', async (req, res) => {
   try {
-    const familyMember = await FamilyMember.findById(req.params.id);
+    const serNo = parseInt(req.params.serNo);
+    const familyMember = await FamilyMember.findOne({ serNo });
 
     if (!familyMember) {
       return res.status(404).json({ message: 'Family member not found' });
     }
 
-    // Remove from related members
-    await FamilyMember.updateMany(
-      { children: req.params.id },
-      { $pull: { children: req.params.id } }
-    );
+    // Remove from parent's children array
+    if (familyMember.fatherSerNo) {
+      await FamilyMember.findOneAndUpdate(
+        { serNo: familyMember.fatherSerNo },
+        { $pull: { childrenSerNos: serNo } }
+      );
+    }
+    if (familyMember.motherSerNo) {
+      await FamilyMember.findOneAndUpdate(
+        { serNo: familyMember.motherSerNo },
+        { $pull: { childrenSerNos: serNo } }
+      );
+    }
 
-    await FamilyMember.updateMany(
-      { siblings: req.params.id },
-      { $pull: { siblings: req.params.id } }
-    );
-
-    await FamilyMember.updateOne(
-      { spouse: req.params.id },
-      { $unset: { spouse: 1 } }
-    );
-
-    await FamilyMember.findByIdAndDelete(req.params.id);
+    await FamilyMember.findOneAndDelete({ serNo });
 
     res.json({ message: 'Family member deleted' });
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Server error');
-  }
-});
-
-// @route   GET api/family/tree/generations
-// @desc    Get family tree organized by generations
-// @access  Private
-router.get('/tree/generations', auth, async (req, res) => {
-  try {
-    const familyMembers = await FamilyMember.find()
-      .populate('father', 'firstName lastName')
-      .populate('mother', 'firstName lastName')
-      .populate('spouse', 'firstName lastName')
-      .populate('children', 'firstName lastName')
-      .sort({ generation: 1, firstName: 1 });
-
-    // Group by generation
-    const generationMap = {};
-    familyMembers.forEach(member => {
-      if (!generationMap[member.generation]) {
-        generationMap[member.generation] = [];
-      }
-      generationMap[member.generation].push(member);
-    });
-
-    res.json(generationMap);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');

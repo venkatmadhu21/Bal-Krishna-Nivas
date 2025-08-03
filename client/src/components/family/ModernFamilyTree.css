@@ -1,0 +1,212 @@
+.modern-tree-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 20px 0;
+}
+
+.modern-tree {
+  display: flex;
+  justify-content: center;
+  min-width: max-content;
+}
+
+.modern-tree-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.modern-tree-node {
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.modern-tree-node:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.modern-tree-node.male {
+  background: linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%);
+  border: 2px solid #91d5ff;
+}
+
+.modern-tree-node.female {
+  background: linear-gradient(135deg, #fff0f6 0%, #ffd6e7 100%);
+  border: 2px solid #ffadd2;
+}
+
+.node-content {
+  padding: 15px;
+  cursor: pointer;
+}
+
+.node-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.node-id {
+  font-size: 0.7rem;
+  color: rgba(0, 0, 0, 0.45);
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.expand-button {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.expand-button:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.node-photo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 10px;
+  border: 3px solid #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.node-name {
+  display: block;
+  font-weight: 600;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.85);
+  text-decoration: none;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.node-name:hover {
+  text-decoration: underline;
+}
+
+.node-spouse {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.65);
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.spouse-label {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.node-vansh {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+
+.modern-tree-children {
+  display: flex;
+  position: relative;
+  padding-top: 20px;
+}
+
+/* Connector lines */
+.modern-tree-children::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background-color: #d9d9d9;
+}
+
+.modern-tree-item {
+  position: relative;
+}
+
+.modern-tree-item::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background-color: #d9d9d9;
+}
+
+.modern-tree-children::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #d9d9d9;
+}
+
+/* First and last child connectors */
+.modern-tree-children .modern-tree-item:first-child::after,
+.modern-tree-children .modern-tree-item:last-child::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 2px;
+  background-color: #d9d9d9;
+}
+
+.modern-tree-children .modern-tree-item:first-child::after {
+  right: 0;
+}
+
+.modern-tree-children .modern-tree-item:last-child::after {
+  left: 0;
+}
+
+/* Only child connector */
+.modern-tree-children .modern-tree-item:only-child::after {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .modern-tree-node {
+    width: 160px;
+  }
+  
+  .node-name {
+    font-size: 0.9rem;
+  }
+  
+  .node-spouse, .node-vansh {
+    font-size: 0.7rem;
+  }
+}
